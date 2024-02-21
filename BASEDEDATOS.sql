@@ -31,3 +31,11 @@ CREATE TABLE Descuentos (
     TipoLibro INT,
     PorcentajeDescuento DECIMAL(5, 2)
 );
+
+--EJEMPLOS DE ALGUNO LIBROS QUE PODRIAN ESTA EN LA BD
+
+INSERT INTO Libros (Titulo, Tipo, Precio) VALUES ('El Gran Gatsby', 1, 90.00);
+INSERT INTO Libros (Titulo, Tipo, Precio) VALUES ('1984', 2, 100.00);
+INSERT INTO Libros (Titulo, Tipo, Precio) VALUES ('Cuentos de la Selva', 3, 80.00);
+INSERT INTO Libros (Titulo, Tipo, Precio) VALUES ('Breve Historia del Tiempo', 4, 150.00);
+
