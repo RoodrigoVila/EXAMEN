@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
-class Program
+public partial class Form1 : Form
 {
-    static void Main()
+    public Form1()
+    {
+        InitializeComponent();
+    }
+
+    private void button1_Click(object sender, EventArgs e)
     {
         string connectionString = "Data Source=(local);Initial Catalog=LibreriaLosLectores;Integrated Security=True";
 
@@ -15,8 +21,8 @@ class Program
             string insertCliente = "INSERT INTO Clientes (Nombre, Genero) VALUES (@Nombre, @Genero)";
             using (SqlCommand command = new SqlCommand(insertCliente, connection))
             {
-                command.Parameters.AddWithValue("@Nombre", "Juan");
-                command.Parameters.AddWithValue("@Genero", "Masculino");
+                command.Parameters.AddWithValue("@Nombre", textBox1.Text);
+                command.Parameters.AddWithValue("@Genero", textBox2.Text);
 
                 command.ExecuteNonQuery();
             }
@@ -25,40 +31,14 @@ class Program
             string registrarVenta = "INSERT INTO Ventas (ClienteID, LibroID, Cantidad, ImporteBruto, Descuento) VALUES (@ClienteID, @LibroID, @Cantidad, @ImporteBruto, @Descuento)";
             using (SqlCommand command = new SqlCommand(registrarVenta, connection))
             {
-                int ClienteID = 1;
-                int LibroID = 1;
-                int Cantidad = 3;
-
-                // Obtener el precio del libro
-                string getPrecio = "SELECT Precio FROM Libros WHERE ID = @LibroID";
-                SqlCommand getPrecioCommand = new SqlCommand(getPrecio, connection);
-                getPrecioCommand.Parameters.AddWithValue("@LibroID", LibroID);
-                decimal Precio = (decimal)getPrecioCommand.ExecuteScalar();
-
-                // Calcular el importe bruto
-                decimal ImporteBruto = Cantidad * Precio;
-
-                // Calcular el descuento
-                decimal Descuento = 0;
-                if (Cantidad >= 3 && Cantidad <= 6)
-                {
-                    Descuento = ImporteBruto * 0.06m; // 6% de descuento
-                }
-                else if (Cantidad > 6)
-                {
-                    Descuento = ImporteBruto * 0.08m; // 8% de descuento
-                }
-
-                command.Parameters.AddWithValue("@ClienteID", ClienteID);
-                command.Parameters.AddWithValue("@LibroID", LibroID);
-                command.Parameters.AddWithValue("@Cantidad", Cantidad);
-                command.Parameters.AddWithValue("@ImporteBruto", ImporteBruto);
-                command.Parameters.AddWithValue("@Descuento", Descuento);
+                command.Parameters.AddWithValue("@ClienteID", 1);
+                command.Parameters.AddWithValue("@LibroID", 1);
+                command.Parameters.AddWithValue("@Cantidad", 3);
+                command.Parameters.AddWithValue("@ImporteBruto", 270); // 3 libros de ficción a S/. 90.00 cada uno
+                command.Parameters.AddWithValue("@Descuento", 16.2); // 6% de descuento por comprar 3 libros de ficción
 
                 command.ExecuteNonQuery();
             }
         }
     }
 }
-
-
